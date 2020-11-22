@@ -3,13 +3,9 @@ import os
 
 s = xmlrpc.client.ServerProxy('http://localhost:8000')
 
-'''
-s.criar('naruto.txt')
-s.criar("boruto.txt")
-s.criar('hinata.txt')
-s.criar('himawari.txt')
-'''
-
-#print(s.excluir("boruto.txt"))
-
-s.editar('naruto.txt', 'ola')
+#print(s.criar('naruto.txt'))
+#print(s.criar('boruto.txt'))
+#print(s.criar('naruto.txt'))
+#print(s.excluir("naruto.txt"))
+#s.editar('naruto.txt', 'ola\nNaruto-kun')
+#print(s.ler('naruto.txt'))
