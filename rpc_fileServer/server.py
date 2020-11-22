@@ -32,10 +32,15 @@ with SimpleXMLRPCServer(('localhost', 8000),
 
         for file in dir:
             if file == nome_arquivo:
-                arquivo = open(f'{path}/{nome_arquivo}', "a")
-                arquivo.write(texto)
-                arquivo.close()
-                return f'{nome_arquivo} editado!\nTexto: "{texto}"'
+                if texto != "#":
+                    arquivo = open(f'{path}/{nome_arquivo}', "a")
+                    arquivo.writelines(texto)
+                    arquivo.write('\n')
+                    arquivo.close()
+                    return ''
+                else:
+                    return f'{nome_arquivo} editado!'
+        
         return f'{nome_arquivo} não ncontrado'
     server.register_function(escreverArquivoDeTexto, 'escrever')
 

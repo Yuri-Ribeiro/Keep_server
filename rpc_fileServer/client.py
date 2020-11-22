@@ -42,8 +42,12 @@ while True:
 
     elif op == 4:
         nome_arquivo = str(input('Nome do arquivo: '))
-        texto = input('Conteúdo a ser inserido:\n')
-        print(s.escrever(nome_arquivo+'.txt', texto))
+        print('Conteúdo a ser inserido:\n')
+        while True:
+            texto = str(input('').rstrip('\n'))
+            print(s.escrever(nome_arquivo+'.txt', texto))
+            if texto == '#':
+                break
 
     elif op == 5:
         nome_arquivo = str(input('Nome do arquivo: '))
