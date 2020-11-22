@@ -39,7 +39,7 @@ with SimpleXMLRPCServer(('localhost', 8000),
         return f'{nome_arquivo} não ncontrado'
     server.register_function(escreverArquivoDeTexto, 'escrever')
 
-    def apagarArquivoDeTexto(nome_arquivo):
+    def apagarConteudoArquivoDeTexto(nome_arquivo):
         path = 'files'
         dir = listdir(path)
 
@@ -49,7 +49,7 @@ with SimpleXMLRPCServer(('localhost', 8000),
                 arquivo.close()
                 return f'{nome_arquivo} sem texto'
         return f'{nome_arquivo} não ncontrado'
-    server.register_function(apagarArquivoDeTexto, 'apagarConteudo')
+    server.register_function(apagarConteudoArquivoDeTexto, 'apagarConteudo')
 
     def lerArquivodeTexto(nome_arquivo):
         path = 'files'
