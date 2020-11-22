@@ -14,13 +14,21 @@ with SimpleXMLRPCServer(('localhost', 8000),
                         requestHandler=RequestHandler, allow_none=True) as server:
     server.register_introspection_functions()
 
-    def criarArquivoDeTexto(nome_arquivo):
+    def buscarArquivoDeTexto(nome_arquivo):
         path = 'files'
         dir = listdir(path)
 
         for file in dir:
             if file == nome_arquivo:
-                return f'{nome_arquivo} já existe'
+                return f'{nome_arquivo}'
+        return False
+    server.register_function(buscarArquivoDeTexto, 'buscar')
+
+    def criarArquivoDeTexto(nome_arquivo):
+        path = 'files'
+
+        if buscarArquivoDeTexto(nome_arquivo) != False:
+            return f'{nome_arquivo} já existe'
         arquivo = open(f'{path}/{nome_arquivo}', 'w+')
         arquivo.close()
         return f'{nome_arquivo} foi criado!'
@@ -28,53 +36,39 @@ with SimpleXMLRPCServer(('localhost', 8000),
 
     def escreverArquivoDeTexto(nome_arquivo, texto):
         path = 'files'
-        dir = listdir(path)
-
-        for file in dir:
-            if file == nome_arquivo:
-                if texto != "#":
-                    arquivo = open(f'{path}/{nome_arquivo}', "a")
-                    arquivo.writelines(texto)
-                    arquivo.write('\n')
-                    arquivo.close()
-                    return ''
-                else:
-                    return f'{nome_arquivo} editado!'
         
-        return f'{nome_arquivo} não ncontrado'
+        if buscarArquivoDeTexto(nome_arquivo) != False:
+            if texto != '#':
+                arquivo = open(f'{path}/{nome_arquivo}', "a")
+                arquivo.writelines(texto)
+                arquivo.write('\n')
+                arquivo.close()
+            return True
+        return False
     server.register_function(escreverArquivoDeTexto, 'escrever')
 
     def apagarConteudoArquivoDeTexto(nome_arquivo):
         path = 'files'
-        dir = listdir(path)
-
-        for file in dir:
-            if file == nome_arquivo:
-                arquivo = open(f'{path}/{nome_arquivo}', "w")
-                arquivo.close()
-                return f'{nome_arquivo} sem texto'
+        if buscarArquivoDeTexto(nome_arquivo) != False:
+            arquivo = open(f'{path}/{nome_arquivo}', "w")
+            arquivo.close()
+            return f'{nome_arquivo} sem texto'
         return f'{nome_arquivo} não ncontrado'
     server.register_function(apagarConteudoArquivoDeTexto, 'apagarConteudo')
 
     def lerArquivodeTexto(nome_arquivo):
         path = 'files'
-        dir = listdir(path)
-
-        for file in dir:
-            if file == nome_arquivo:
-                arquivo = open(f'{path}/{nome_arquivo}', "r")
-                return arquivo.read()
+        if buscarArquivoDeTexto(nome_arquivo) != False:
+            arquivo = open(f'{path}/{nome_arquivo}', "r")
+            return arquivo.read()
         return f'{nome_arquivo} não encontrado'
     server.register_function(lerArquivodeTexto, 'ler')
 
     def excluirArquivoDeTexto(nome_arquivo):
         path = 'files'
-        dir = listdir(path)
-
-        for file in dir:
-            if file == nome_arquivo:
-                remove(f'{path}/{file}')
-                return 'Arquivo removido!'
+        if buscarArquivoDeTexto(nome_arquivo) != False:
+            remove(f'{path}/{nome_arquivo}')
+            return 'Arquivo removido!'
         return f'{nome_arquivo} não encontrado'
     server.register_function(excluirArquivoDeTexto, 'excluir')
 

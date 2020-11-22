@@ -33,29 +33,34 @@ while True:
         print(s.listar())
 
     elif op == 2:
-        nome_arquivo = str(input('Nome do arquivo: '))
-        print(s.criar(nome_arquivo+'.txt'))
+        nome_arquivo = str(input('Nome do arquivo [*.txt]:'))
+        print(s.criar(nome_arquivo))
 
     elif op == 3:
-        nome_arquivo = str(input('Nome do arquivo: '))
-        print(s.ler(nome_arquivo+'.txt'))
+        nome_arquivo = str(input('Nome do arquivo [*.txt]: '))
+        print(s.ler(nome_arquivo))
 
     elif op == 4:
-        nome_arquivo = str(input('Nome do arquivo: '))
-        print('Conteúdo a ser inserido:\n')
-        while True:
-            texto = str(input('').rstrip('\n'))
-            print(s.escrever(nome_arquivo+'.txt', texto))
-            if texto == '#':
-                break
+        nome_arquivo = str(input('Nome do arquivo [*.txt]: '))
+        if s.buscar(nome_arquivo) != False:
+            print('(Digite \'#\' na última linha para ecerrar)Conteúdo a ser inserido:\n')
+            while True:
+                texto = str(input(''))
+                arquivo_encontrado = s.escrever(nome_arquivo, texto)
+                if arquivo_encontrado == True:
+                    if texto == '#':
+                        print(f'----{nome_arquivo} editado!----')
+                        break
+        else:
+            print(f'{nome_arquivo} não encontado!')
 
     elif op == 5:
-        nome_arquivo = str(input('Nome do arquivo: '))
-        print(s.apagarConteudo(nome_arquivo+'.txt'))
+        nome_arquivo = str(input('Nome do arquivo [*.txt]: '))
+        print(s.apagarConteudo(nome_arquivo))
 
     elif op == 6:
-        nome_arquivo = str(input('Nome do arquivo: '))
-        print(s.excluir(nome_arquivo+'.txt'))
+        nome_arquivo = str(input('Nome do arquivo [*.txt]: '))
+        print(s.excluir(nome_arquivo))
 
     elif op == 0:
         print('Saindo...')
@@ -63,7 +68,7 @@ while True:
         
     else:
         print('-Opção inválida')
-
+        op = 'INVÁLIDA'
     
     while True:
         continuar = str(input(f'\nCONTINUAR NA OPÇÃO {op}?[S/N]: ')).upper()
