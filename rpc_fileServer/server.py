@@ -26,28 +26,51 @@ with SimpleXMLRPCServer(('localhost', 8000),
         return f'{nome_arquivo} foi criado!'
     server.register_function(criarArquivoDeTexto, 'criar')
 
-    def editarArquivoDeTexto(arquivo, texto):
-        path = 'files'
-        arquivo = open(f'{path}/{arquivo}', "a")
-        arquivo.write(texto)
-        arquivo.close()
-    server.register_function(editarArquivoDeTexto, 'editar')
-
-    def lerArquivodeTexto(arquivo):
-        path = 'files'
-        arquivo = open(f'{path}/{arquivo}', "r")
-        return arquivo.read()
-    server.register_function(lerArquivodeTexto, 'ler')
-
-    def excluirArquivoDeTexto(arquivo):
+    def escreverArquivoDeTexto(nome_arquivo, texto):
         path = 'files'
         dir = listdir(path)
 
         for file in dir:
-            if file == arquivo:
+            if file == nome_arquivo:
+                arquivo = open(f'{path}/{nome_arquivo}', "a")
+                arquivo.write(texto)
+                arquivo.close()
+                return f'{nome_arquivo} editado!\nTexto: "{texto}"'
+        return f'{nome_arquivo} não ncontrado'
+    server.register_function(escreverArquivoDeTexto, 'escrever')
+
+    def apagarArquivoDeTexto(nome_arquivo):
+        path = 'files'
+        dir = listdir(path)
+
+        for file in dir:
+            if file == nome_arquivo:
+                arquivo = open(f'{path}/{nome_arquivo}', "w")
+                arquivo.close()
+                return f'{nome_arquivo} sem texto'
+        return f'{nome_arquivo} não ncontrado'
+    server.register_function(apagarArquivoDeTexto, 'apagarConteudo')
+
+    def lerArquivodeTexto(nome_arquivo):
+        path = 'files'
+        dir = listdir(path)
+
+        for file in dir:
+            if file == nome_arquivo:
+                arquivo = open(f'{path}/{nome_arquivo}', "r")
+                return arquivo.read()
+        return f'{nome_arquivo} não encontrado'
+    server.register_function(lerArquivodeTexto, 'ler')
+
+    def excluirArquivoDeTexto(nome_arquivo):
+        path = 'files'
+        dir = listdir(path)
+
+        for file in dir:
+            if file == nome_arquivo:
                 remove(f'{path}/{file}')
                 return 'Arquivo removido!'
-        return 'Não encontrado'
+        return f'{nome_arquivo} não encontrado'
     server.register_function(excluirArquivoDeTexto, 'excluir')
 
     def listarArquivos():
