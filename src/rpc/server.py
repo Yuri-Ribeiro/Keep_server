@@ -75,6 +75,7 @@ with SimpleXMLRPCServer(('localhost', 8000),
     def listarArquivos():
         path = 'files'
         files = [f for f in listdir(path) if isfile(join(path, f))]
+        files.remove('.gitignore')
         return files
     server.register_function(listarArquivos, 'listar')
 
