@@ -2,15 +2,6 @@ import xmlrpc.client
 
 s = xmlrpc.client.ServerProxy('http://localhost:8000')
 
-#print(s.criar('naruto.txt'))
-#print(s.listar())
-#print(s.escrever('naruto.txt', 'ola\nNaruto-kun'))
-#print(s.ler('naruto.txt'))
-#print(s.apagarConteudo('naruto.txt'))
-#print(s.excluir("naruto.txt"))
-#print(s.listar())
-
-
 print('--------------SISTEMA DE ARQUIVOS DE TEXTO--------------')
 print("""ESCOLHA UMA OPÇÃO:
         [1] LISTAR ARQUIVOS 

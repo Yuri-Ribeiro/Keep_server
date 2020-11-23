@@ -6,7 +6,6 @@ host = ''
 port = 7008
 address = (host, port)
 
-# otherHost = input("IP servidor de arquivos: ")
 otherHost = '127.0.0.1'
 otherPort = 7005
 otherAddress = (otherHost, otherPort)
