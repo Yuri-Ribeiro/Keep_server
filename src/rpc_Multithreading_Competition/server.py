@@ -5,9 +5,8 @@ from sys import exit
 
 from time import sleep
 
-from os import listdir
-from os.path import isfile, join
-from os import remove
+from os import listdir, makedirs, remove
+from os.path import isfile, join, exists
 
 class SimpleThreadedXMLRPCServer(ThreadingMixIn, SimpleXMLRPCServer):
     pass
@@ -159,6 +158,8 @@ def run_server(host="localhost", port=8000):
 
 if __name__ == '__main__':
     try:
+        if not exists('files'):
+            makedirs('files')
         run_server()
     except KeyboardInterrupt:
         print("\nServidor interrompido pelo adm...")
